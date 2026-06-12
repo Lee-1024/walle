@@ -1,0 +1,21 @@
+# Walle 全局默认配置组
+global:
+  user: root
+  port: 22
+  password: "DefaultPassword123"             # 如果主机没有独立设置密码，则默认使用它
+  private_key_path: "~/.ssh/id_rsa"         # 默认使用的 SSH 私钥路径（如使用密钥认证）
+
+# 目标集群主机列表
+hosts:
+  - host: "192.168.1.101"
+    alias: "web-node-01"                      # 别名，用于终端彩色日志识别显示
+    # 继承 global 的 root、22 端口和密码
+
+  - host: "192.168.1.102"
+    alias: "web-node-02"
+    password: "CustomPassword456"             # 覆盖全局密码，使用独立密码认证
+
+  - host: "192.168.1.103"
+    alias: "db-master"
+    user: "admin"                            # 覆盖全局用户
+    private_key_path: "~/.ssh/custom_id_rsa"  # 覆盖全局私钥，专门使用独立私钥证书
