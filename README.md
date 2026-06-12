@@ -12,6 +12,32 @@ Walle 是一款使用 Go 语言编写的高性能、轻量级分布式 Linux 批
 
 ## 📦 快速开始
 
+### 1. 📂 资产清单配置文件：`hosts.yaml`
+支持设置全局默认参数（如统一的端口或私钥），而在特定的机器节点，可以通过编写独立参数直接覆盖全局默认值。
+
+```yaml
+# Walle 全局默认配置组
+global:
+  user: root
+  port: 22
+  password: "DefaultPassword123"             # 如果主机没有独立设置密码，则默认使用它
+  private_key_path: "~/.ssh/id_rsa"         # 默认使用的 SSH 私钥路径（如使用密钥认证）
+
+# 目标集群主机列表
+hosts:
+  - host: "192.168.1.101"
+    alias: "web-node-01"                      # 别名，用于终端彩色日志识别显示
+    # 继承 global 的 root、22 端口和密码
+
+  - host: "192.168.1.102"
+    alias: "web-node-02"
+    password: "CustomPassword456"             # 覆盖全局密码，使用独立密码认证
+
+  - host: "192.168.1.103"
+    alias: "db-master"
+    user: "admin"                            # 覆盖全局用户
+    private_key_path: "~/.ssh/custom_id_rsa"  # 覆盖全局私钥，专门使用独立私钥证书
+
 ### 1. 本地环境准备
 确保你的本地开发环境已安装 Go 1.18+。
 
